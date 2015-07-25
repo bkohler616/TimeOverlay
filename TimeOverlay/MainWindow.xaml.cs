@@ -35,10 +35,12 @@ namespace TimeOverlay
 				this.DragMove();
 		}
 
-		private void Window_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+		private void CloseOverlay_Click(object sender, RoutedEventArgs e)
 		{
-			throw new NotImplementedException();
+			Application.Current.Shutdown();
 		}
+		//TODO: Add timer to update lblTimer on what time it is.
+
 
 	}
 }
