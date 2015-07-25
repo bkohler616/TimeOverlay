@@ -1,46 +1,66 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Timers;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace TimeOverlay
 {
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
-	public partial class MainWindow: Window
+	public partial class MainWindow
 	{
+		private readonly Timer _updateTime;
+		private DateTime _currentDateTime;
 		public MainWindow()
 		{
+
 			InitializeComponent();
+			_updateTime = new Timer {Interval = 1000};
+			_currentDateTime = new DateTime();
+			_updateTime.Elapsed += UpdateTime_Elapsed;
+			_updateTime.Start();
+
+
 		}
 
-		private void Button_Click(object o, RoutedEventArgs e)
+		private void UpdateTime_Elapsed(object sender, ElapsedEventArgs elapsedEventArgs)
 		{
-			throw new NotImplementedException();
+			_updateTime.Stop();
+			_currentDateTime = DateTime.Now;
+			Application.Current.Dispatcher.BeginInvoke((Action) delegate()
+			{
+				LblDate.Content = _currentDateTime.DayOfWeek + ", " + _currentDateTime.Day + "/" + _currentDateTime.Month + "/" +
+				                  _currentDateTime.Year;
+				LblTime.Content = _currentDateTime.Hour + ":" + _currentDateTime.Minute + "." + _currentDateTime.Second;
+			});
+			_updateTime.Start();
 		}
 
+		
 		private void Window_MouseDown(object sender, MouseButtonEventArgs e)
 		{
-			if(e.ChangedButton == MouseButton.Left)
-				this.DragMove();
+			if (e.ChangedButton == MouseButton.Left)
+			{
+				DragMove();
+			}
 		}
 
 		private void CloseOverlay_Click(object sender, RoutedEventArgs e)
 		{
 			Application.Current.Shutdown();
 		}
-		//TODO: Add timer to update lblTimer on what time it is.
 
+		private void LblDate_OnLoaded(object sender, RoutedEventArgs e)
+		{
+			LblDate.Content = "Getting Date...";
+		}
 
+		private void LblTime_OnLoaded(object sender, RoutedEventArgs e)
+		{
+			LblTime.Content = "Getting Time...";
+		}
+
+		//TODO: Add context menu items to change font and time/date styles
 	}
 }
