@@ -1,0 +1,11 @@
+﻿ - Settings Menu
+	 -Font size
+	 -Font color
+		  -Color picker? Or Rely on hex?
+				-If hex, ragex check the letters
+	 -Resize Window
+	 -Transparancy amount
+	 -Saveable Settings (XML Serialize)
+ - Main Window
+	 - Add month name.
+ - More features to be added
