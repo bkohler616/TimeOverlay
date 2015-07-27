@@ -18,6 +18,7 @@ namespace TimeOverlay
 		private DateTime _currentDateTime;
 		private readonly SettingsWindow _settingsWindowAccess;
 		private static string _path;
+		private readonly About _aboutWindow;
 
 		public MainWindow()
 		{
@@ -25,6 +26,7 @@ namespace TimeOverlay
 			InitializeComponent();
 			_updateTime = new Timer {Interval = 1000};
 			_currentDateTime = new DateTime();
+			_aboutWindow = new About();
 			_updateTime.Elapsed += UpdateTime_Elapsed;
 			_updateTime.Start();
 
@@ -90,10 +92,9 @@ namespace TimeOverlay
 			_settingsWindowAccess.Show();
 		}
 
-		//TODO: Add context menu items to change font and time/date styles
 		private void ShowAbout_Click(object sender, RoutedEventArgs e)
 		{
-			MessageBox.Show(this, "This application was made by Benjamin Kohler.\n\nVersion: " + "V0.1", "About TimeOverlay");
+			_aboutWindow.Show();
 		}
 
 		//TODO: Send and recieve settings info to and from the settings window to save into XML Serilizable

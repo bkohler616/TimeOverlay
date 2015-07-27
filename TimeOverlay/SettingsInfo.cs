@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Windows.Navigation;
-
+﻿
 namespace TimeOverlay
 {
 	public class SettingsInfo
@@ -14,10 +8,15 @@ namespace TimeOverlay
 		private int _timeFontSize;
 		private int _dateFontSize;
 
+		private const int TimeFontSizeDefault = 30;
+		private const int DateFontSizeDefault = 15;
+
+		private const string TimeTextColorDefault = "ffffff";
+		private const string DateTextColorDefault = "808080";
+
 		public SettingsInfo()
 		{
-			_timeTextColor = "ffffff";
-			_dateTextColor = "808080";
+			RestoreDefault();
 			CloseApplication = false;
 		}
 		public string TimeTextColor
@@ -48,22 +47,22 @@ namespace TimeOverlay
 
 		public void DefaultTimeColor()
 		{
-			_timeTextColor = "ffffff";
+			_timeTextColor = TimeTextColorDefault;
 		}
 
 		public void DefaultDateColor()
 		{
-			_dateTextColor = "808080";
+			_dateTextColor = DateTextColorDefault;
 		}
 
 		public void DefaultTimeFontSize()
 		{
-			_timeFontSize = 30;
+			_timeFontSize = TimeFontSizeDefault;
 		}
 
 		public void DefaultDateFontSize()
 		{
-			_dateFontSize = 15;
+			_dateFontSize = DateFontSizeDefault;
 		}
 
 		public void RestoreDefault()

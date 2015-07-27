@@ -1,0 +1,41 @@
+﻿<Window x:Class="TimeOverlay.About"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		  Closing="About_OnClosing"
+        Title="About" Height="300" Width="300">
+    
+	 <WrapPanel FlowDirection="LeftToRight">
+		<Image Width="100"
+				 Height="100"
+				 Source="Resources/TimeOverlayClock.png"
+				 HorizontalAlignment="Left"
+				 Margin="5,5,5,5"
+				 Name="ImageDisplay">
+		</Image>
+		  <TextBlock>
+				<TextBlock Name="PreNameText"
+							  TextWrapping="Wrap"/>
+				<LineBreak/>
+				<Hyperlink RequestNavigate="BenWebsite_OnRequestNavigate">
+					 <TextBlock Name="AppDevName"
+									TextWrapping="Wrap" />
+				</Hyperlink>
+				<LineBreak/>
+				<TextBlock Name="VersionNumber"
+							  TextWrapping="Wrap"/>
+		  </TextBlock>
+		
+		<TextBlock Margin="5,5,5,5">
+			 <Hyperlink RequestNavigate="GithubLink_OnRequestNavigate"
+							NavigateUri="http://github.com/riku12124/TimeOverlay">
+				  <TextBlock Name="GithubLink"
+								 TextWrapping="Wrap"/>
+			 </Hyperlink>
+		</TextBlock>
+		<TextBlock Name="ApplicationDesc"
+					  TextWrapping="Wrap" 
+					  Text="Temp3"
+					  Margin="5,5,5,5" />
+	</WrapPanel>
+	 
+</Window>
