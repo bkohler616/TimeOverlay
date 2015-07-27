@@ -1,11 +1,12 @@
 ﻿ - Settings Menu
-	 -Font size
-	 -Font color
-		  -Color picker? Or Rely on hex?
-				-If hex, ragex check the letters
-	 -Resize Window
+	 (Check)Font size
+	 (Check)Font color
+		  (Check)Color picker? Or Rely on hex?
+				(Check)If hex, ragex check the letters
+	 (Check. Window resizable via font size)Resize Window
 	 -Transparancy amount
-	 -Saveable Settings (XML Serialize)
+	 (Check)Saveable Settings (XML Serialize)
  - Main Window
 	 - Add month name.
+	 - Fix time to show standard time (12 instead of 0) and add am/pm.
  - More features to be added

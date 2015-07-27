@@ -4,6 +4,7 @@ using System.IO;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Xml.Serialization;
 
 namespace TimeOverlay
@@ -15,7 +16,7 @@ namespace TimeOverlay
 	{
 		private readonly Timer _updateTime;
 		private DateTime _currentDateTime;
-		private SettingsWindow settingsWindowAccess;
+		private readonly SettingsWindow _settingsWindowAccess;
 		private static string _path;
 
 		public MainWindow()
@@ -34,10 +35,13 @@ namespace TimeOverlay
 			{
 				XmlSerializer reader = new XmlSerializer(typeof(SettingsInfo));
 				StreamReader file = new StreamReader(_path);
-				settingsWindowAccess = new SettingsWindow((SettingsInfo)reader.Deserialize(file));
+				_settingsWindowAccess = new SettingsWindow((SettingsInfo)reader.Deserialize(file));
+			} else
+			{
+				_settingsWindowAccess = new SettingsWindow();
 			}
-			settingsWindowAccess = new SettingsWindow();
-			settingsWindowAccess.Hide();
+			_settingsWindowAccess.Settings.CloseApplication = false;
+			_settingsWindowAccess.Hide();
 		}
 
 		private void UpdateTime_Elapsed(object sender, ElapsedEventArgs elapsedEventArgs)
@@ -47,8 +51,12 @@ namespace TimeOverlay
 			//Invoke another thread to input content
 			Application.Current.Dispatcher.BeginInvoke((Action) delegate()
 			{
+				LblDate.Foreground =(SolidColorBrush)new BrushConverter().ConvertFrom("#" + _settingsWindowAccess.Settings.DateTextColor);
+				LblTime.Foreground = (SolidColorBrush) new BrushConverter().ConvertFrom("#" + _settingsWindowAccess.Settings.TimeTextColor);
 				LblDate.Content = _currentDateTime.DayOfWeek + ", " + _currentDateTime.Month + "/" + _currentDateTime.Day + "/" + _currentDateTime.Year;
 				LblTime.Content = _currentDateTime.Hour%12 + ":" + _currentDateTime.Minute + "." + _currentDateTime.Second;
+				LblTime.FontSize = _settingsWindowAccess.Settings.TimeFontSize;
+				LblDate.FontSize = _settingsWindowAccess.Settings.DateFontSize;
 			});
 			_updateTime.Start();
 		}
@@ -79,20 +87,19 @@ namespace TimeOverlay
 
 		private void ShowSettings_Click(object sender, RoutedEventArgs e)
 		{
-			settingsWindowAccess.Show();
+			_settingsWindowAccess.Show();
 		}
 
 		//TODO: Add context menu items to change font and time/date styles
 		private void ShowAbout_Click(object sender, RoutedEventArgs e)
 		{
-			throw new NotImplementedException();
+			MessageBox.Show(this, "This application was made by Benjamin Kohler.\n\nVersion: " + "V0.1", "About TimeOverlay");
 		}
 
 		//TODO: Send and recieve settings info to and from the settings window to save into XML Serilizable
 		private void MainWindow_OnClosing(object sender, CancelEventArgs e)
 		{
-			MessageBox.Show("Saving settings...");
-			SettingsInfo saveSettings = settingsWindowAccess.Settings;
+			SettingsInfo saveSettings = _settingsWindowAccess.Settings;
 			XmlSerializer writer = new XmlSerializer(typeof(SettingsInfo));
 			FileStream file = File.Create(_path);
 
@@ -102,14 +109,16 @@ namespace TimeOverlay
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show("Error writing settings to document:" + ex.Message + "..... " + ex.StackTrace);
+				MessageBox.Show("Error writing settings to document:" + ex.Message + "\n\n\n" + ex.StackTrace);
 			}
 			finally
 			{
 				file.Close();
 			}
-			
-			
+
+			_settingsWindowAccess.Settings.CloseApplication = true;
+
+
 		}
 	}
 }

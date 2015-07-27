@@ -11,28 +11,67 @@ namespace TimeOverlay
 	{
 		private string _timeTextColor;
 		private string _dateTextColor;
+		private int _timeFontSize;
+		private int _dateFontSize;
 
 		public SettingsInfo()
 		{
 			_timeTextColor = "ffffff";
 			_dateTextColor = "808080";
+			CloseApplication = false;
 		}
 		public string TimeTextColor
 		{
 			get { return _timeTextColor; }
-			set { _timeTextColor = CheckHex(value) ? value : "ffffff"; }
+			set { _timeTextColor = value; }
 		}
 
 		public string DateTextColor
 		{
 			get { return _dateTextColor; }
-			set { _dateTextColor = CheckHex(value) ? value : "808080"; }
+			set { _dateTextColor = value; }
 		}
 
-		private bool CheckHex(String hexString)
+		public int TimeFontSize
 		{
-			Regex rgx = new Regex(@"/([A-Z]|[0-9])/g");
-			return rgx.IsMatch(hexString);
+			get { return _timeFontSize; }
+			set { _timeFontSize = value; }
+		}
+
+		public int DateFontSize
+		{
+			get { return _dateFontSize; }
+			set { _dateFontSize = value; }
+		}
+
+		public bool CloseApplication { get; set; }
+
+		public void DefaultTimeColor()
+		{
+			_timeTextColor = "ffffff";
+		}
+
+		public void DefaultDateColor()
+		{
+			_dateTextColor = "808080";
+		}
+
+		public void DefaultTimeFontSize()
+		{
+			_timeFontSize = 30;
+		}
+
+		public void DefaultDateFontSize()
+		{
+			_dateFontSize = 15;
+		}
+
+		public void RestoreDefault()
+		{
+			DefaultDateColor();
+			DefaultTimeColor();
+			DefaultDateFontSize();
+			DefaultTimeFontSize();
 		}
 	}
 }
