@@ -3,6 +3,8 @@ using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows;
 
+
+
 namespace TimeOverlay
 {
 	/// <summary>
@@ -31,6 +33,7 @@ namespace TimeOverlay
 			TbTimeColor.Text = _settings.TimeTextColor;
 			TbDateFontSize.Text = _settings.DateFontSize.ToString();
 			TbTimeFontSize.Text = _settings.TimeFontSize.ToString();
+			TbBackgroundOpacity.Text = _settings.WindowOpacityPercentage.ToString();
 		}
 
 		private void SettingsWindow_OnClosing(object sender, CancelEventArgs e)
@@ -84,14 +87,14 @@ namespace TimeOverlay
 			//Date Font Check
 			try
 			{
-				if(!CheckHex(TbDateFontSize.Text))
+				if(!CheckInt(TbDateFontSize.Text))
 					throw new Exception("\n-Date font size is not a proper value. Please only use whole numbers.");
 				int fontValue;
 				bool parseSuccess = Int32.TryParse(TbDateFontSize.Text, out fontValue);
 				if(!parseSuccess)
 					throw new Exception("\n-Date font size is not a proper value. Please only use whole numbers.");
-				if(!(fontValue < 101 && fontValue > 4))
-					throw new Exception("\n-Date font size is out of range. Please use numbers in between 5 and 100");
+				if(!(fontValue < 201 && fontValue > 4))
+					throw new Exception("\n-Date font size is out of range. Please use numbers in between 5 and 200");
 				_settings.DateFontSize = fontValue;
 			} catch(Exception ex)
 			{
@@ -103,20 +106,39 @@ namespace TimeOverlay
 			//Time Font Check
 			try
 			{
-				if(!CheckHex(TbTimeFontSize.Text))
+				if(!CheckInt(TbTimeFontSize.Text))
 					throw new Exception("\n-Time font size is not a proper value. Please only use whole numbers.");
 				int fontValue;
 				bool parseSuccess = Int32.TryParse(TbTimeFontSize.Text, out fontValue);
 				if(!parseSuccess)
 					throw new Exception("\n-Time font size is not a proper value. Please only use whole numbers.");
-				if(!(fontValue < 101 && fontValue > 4))
-					throw new Exception("\n-Time font size is out of range. Please use numbers in between 5 and 100");
+				if(!(fontValue < 201 && fontValue > 4))
+					throw new Exception("\n-Time font size is out of range. Please use numbers in between 5 and 400");
 				_settings.TimeFontSize = fontValue;
 			} catch(Exception ex)
 			{
 				errorList += ex.Message;
 				printErrorIfTrue = true;
 				_settings.DefaultTimeFontSize();
+			}
+
+			//Opacity Check
+			try
+			{
+				if (!CheckInt(TbBackgroundOpacity.Text))
+					throw new Exception("\n-Opacity is not a proper value. Please only use whole numbers.");
+				int opacityPercent;
+				bool parseSuccess = Int32.TryParse(TbBackgroundOpacity.Text, out opacityPercent);
+				if (!parseSuccess)
+					throw new Exception("\n-Opacity is not a proper value. Please only use whole numbers.");
+				if (!(opacityPercent > -1 && opacityPercent < 101))
+					throw new Exception("\n-Opacity percentage is out of range. Please use numbers in between 1 and 100");
+				_settings.WindowOpacityPercentage = opacityPercent;
+			} catch(Exception ex)
+			{
+				errorList += ex.Message;
+				printErrorIfTrue = true;
+				_settings.DefaultOpacityPercentage();
 			}
 			#endregion
 
@@ -136,8 +158,6 @@ namespace TimeOverlay
 		{
 			get { return _settings; }
 		}
-
-		//TODO: Check if the settings info rejected to hex code and defaulted to another on close.
 		private void ResetDefault_OnClick(object sender, RoutedEventArgs e)
 		{
 			_settings.RestoreDefault();

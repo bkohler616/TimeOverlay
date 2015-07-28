@@ -13,8 +13,10 @@
 		  Closing="MainWindow_OnClosing"
 		  SizeToContent="WidthAndHeight"
 		  ResizeMode="NoResize">
-	<Border CornerRadius="20"
-			  Background="#7f000000">
+	<Border Name="BrdrBackground"
+			  CornerRadius="20"
+			  Background="#000000"
+			  Opacity="50">
 
 		<Border BorderBrush="Transparent"
 				  BorderThickness="5"

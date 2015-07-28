@@ -1,10 +1,13 @@
 ﻿
+using System;
+
 namespace TimeOverlay
 {
 	public class SettingsInfo
 	{
 		private string _timeTextColor;
 		private string _dateTextColor;
+		private int _windowOpacityPercentage;
 		private int _timeFontSize;
 		private int _dateFontSize;
 
@@ -13,6 +16,7 @@ namespace TimeOverlay
 
 		private const string TimeTextColorDefault = "ffffff";
 		private const string DateTextColorDefault = "808080";
+		private const int WindowOpacityDefault = 50;
 
 		public SettingsInfo()
 		{
@@ -45,6 +49,12 @@ namespace TimeOverlay
 
 		public bool CloseApplication { get; set; }
 
+		public int WindowOpacityPercentage
+		{
+			get { return _windowOpacityPercentage; }
+			set { _windowOpacityPercentage = value; }
+		}
+
 		public void DefaultTimeColor()
 		{
 			_timeTextColor = TimeTextColorDefault;
@@ -65,12 +75,18 @@ namespace TimeOverlay
 			_dateFontSize = DateFontSizeDefault;
 		}
 
+		public void DefaultOpacityPercentage()
+		{
+			_windowOpacityPercentage = WindowOpacityDefault;
+		}
+
 		public void RestoreDefault()
 		{
 			DefaultDateColor();
 			DefaultTimeColor();
 			DefaultDateFontSize();
 			DefaultTimeFontSize();
+			DefaultOpacityPercentage();
 		}
 	}
 }

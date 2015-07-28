@@ -4,9 +4,11 @@
 		  Title="Settings"
 		  Height="300"
 		  Width="500"
-		  Closing="SettingsWindow_OnClosing">
+		  Closing="SettingsWindow_OnClosing"
+		  ResizeMode="NoResize">
 	<Grid Margin="12,12,12,12">
 		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
@@ -80,6 +82,19 @@
 		<TextBox Name="TbTimeFontSize"
 					Grid.Column="1"
 					Grid.Row="4"
+					Width="60"
+					Height="18"
+					HorizontalAlignment="Left"
+					Margin="5,0,0,0"
+					MaxLength="6"></TextBox>
+
+		<Label Content="Main Window Opacity: %"
+				 Grid.Column="0"
+				 Grid.Row="5"
+				 HorizontalAlignment="Right" />
+		<TextBox Name="TbBackgroundOpacity"
+					Grid.Column="1"
+					Grid.Row="5"
 					Width="60"
 					Height="18"
 					HorizontalAlignment="Left"

@@ -4,7 +4,7 @@
 		  (Check)Color picker? Or Rely on hex?
 				(Check)If hex, ragex check the letters
 	 (Check. Window resizable via font size)Resize Window
-	 -Transparancy amount
+	 (Check)Transparancy amount
 	 (Check)Saveable Settings (XML Serialize)
  - Main Window
 	 - Add month name.
