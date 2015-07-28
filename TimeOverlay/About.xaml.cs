@@ -1,31 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
+﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Reflection;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace TimeOverlay
-{
+namespace TimeOverlay {
 	/// <summary>
-	/// Interaction logic for About.xaml
+	///    Interaction logic for About.xaml
 	/// </summary>
-	public partial class About: Window
-	{
-		public About()
-		{
+	public partial class About : Window {
+		public About() {
 			InitializeComponent();
-			this.Hide();
+			Hide();
 			PreNameText.Text = "Application Developer: ";
 			AppDevName.Text = "Benjamin Kohler";
 			VersionNumber.Text = "Version: " + Assembly.GetExecutingAssembly().GetName().Version;
@@ -36,22 +22,17 @@ namespace TimeOverlay
 			//ImageDisplay.Source = "pack://application:,,,,/Resources/TimeOverlayClock.png";
 		}
 
-		private void GithubLink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
-		{
-			System.Diagnostics.Process.Start("http://github.com/riku12124/TimeOverlay");
+		private void GithubLink_OnRequestNavigate(object sender, RequestNavigateEventArgs e) {
+			Process.Start("http://github.com/riku12124/TimeOverlay");
 		}
 
-
-		private void About_OnClosing(object sender, CancelEventArgs e)
-		{
+		private void About_OnClosing(object sender, CancelEventArgs e) {
 			e.Cancel = true;
-			this.Hide();
-
+			Hide();
 		}
 
-		private void BenWebsite_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
-		{
-			System.Diagnostics.Process.Start("http://BenKohler.com");
+		private void BenWebsite_OnRequestNavigate(object sender, RequestNavigateEventArgs e) {
+			Process.Start("http://BenKohler.com");
 		}
 	}
 }
