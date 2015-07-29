@@ -17,7 +17,8 @@
 			<TextBlock Name="PreNameText"
 			           TextWrapping="Wrap" />
 			<LineBreak />
-			<Hyperlink RequestNavigate="BenWebsite_OnRequestNavigate">
+			<Hyperlink RequestNavigate="BenWebsite_OnRequestNavigate"
+						  NavigateUri="http://BenKohler.com">
 				<TextBlock Name="AppDevName"
 				           TextWrapping="Wrap" />
 			</Hyperlink>

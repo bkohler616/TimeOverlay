@@ -12,7 +12,9 @@
         Topmost="True"
         Closing="MainWindow_OnClosing"
         SizeToContent="WidthAndHeight"
-        ResizeMode="NoResize">
+		  ResizeMode="NoResize"
+		  IsHitTestVisible="True"
+		  Name="WinMainWindowHandler">
 	<Border Name="BrdrBackground"
 	        CornerRadius="20"
 	        Background="#000000"

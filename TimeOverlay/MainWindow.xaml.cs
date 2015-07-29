@@ -19,8 +19,7 @@ namespace TimeOverlay {
 	///    This exists due to 2 reasons.
 	///    1. I personally wanted to get to know the basics of WPF and XAML for any sort of means that I may use it for.
 	///    2. The work I'm attending requires an application that will overlay over the main screen. This will be not only an
-	///    experiment,
-	///    But also the base foundation for that program.
+	///    experiment, but also the base foundation for that program.
 	/// </summary>
 	public partial class MainWindow {
 		private static string _path;
@@ -61,12 +60,14 @@ namespace TimeOverlay {
 					(SolidColorBrush) new BrushConverter().ConvertFrom("#" + _settingsWindowAccess.Settings.DateTextColor);
 				LblTime.Foreground =
 					(SolidColorBrush) new BrushConverter().ConvertFrom("#" + _settingsWindowAccess.Settings.TimeTextColor);
-				LblDate.Content = _currentDateTime.DayOfWeek + ", " + _currentDateTime.Month + "/" + _currentDateTime.Day + "/" +
-				                  _currentDateTime.Year;
-				LblTime.Content = _currentDateTime.Hour%12 + ":" + _currentDateTime.Minute + "." + _currentDateTime.Second;
+				LblDate.Content = _currentDateTime.DayOfWeek + ", " + DateTime.Now.ToString("MMMM") + " (" + _currentDateTime.Month +
+				                  "/" + _currentDateTime.Day + "/" +
+				                  _currentDateTime.Year + ")";
+				LblTime.Content = _currentDateTime.ToString("hh:mm:ss tt");
 				LblTime.FontSize = _settingsWindowAccess.Settings.TimeFontSize;
 				LblDate.FontSize = _settingsWindowAccess.Settings.DateFontSize;
 				BrdrBackground.Background.Opacity = (_settingsWindowAccess.Settings.WindowOpacityPercentage/100.0);
+				WinMainWindowHandler.IsHitTestVisible = _settingsWindowAccess.Settings.ClickThrough;
 			});
 			_updateTime.Start();
 		}

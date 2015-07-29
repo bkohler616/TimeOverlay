@@ -5,6 +5,7 @@
 		private const string TimeTextColorDefault = "ffffff";
 		private const string DateTextColorDefault = "808080";
 		private const int WindowOpacityDefault = 50;
+		private const bool ClickThroughDefault = true;
 
 		public SettingsInfo() {
 			RestoreDefault();
@@ -17,6 +18,7 @@
 		public int DateFontSize { get; set; }
 		public bool CloseApplication { get; set; }
 		public int WindowOpacityPercentage { get; set; }
+		public bool ClickThrough { get; set; }
 
 		public void DefaultTimeColor() {
 			TimeTextColor = TimeTextColorDefault;
@@ -38,12 +40,17 @@
 			WindowOpacityPercentage = WindowOpacityDefault;
 		}
 
+		public void DefaultClickThrough() {
+			ClickThrough = ClickThroughDefault;
+		}
+
 		public void RestoreDefault() {
 			DefaultDateColor();
 			DefaultTimeColor();
 			DefaultDateFontSize();
 			DefaultTimeFontSize();
 			DefaultOpacityPercentage();
+			DefaultClickThrough();
 		}
 	}
 }
