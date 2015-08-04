@@ -6,14 +6,13 @@
         Height="300"
         Width="300">
 
-	<WrapPanel FlowDirection="LeftToRight">
-		<Image Width="100"
+    <WrapPanel FlowDirection="LeftToRight">
+        <Image Width="100"
 		       Height="100"
-		       Source="Resources/TimeOverlayClock.png"
+				 x:Name ="ImageDisplay"
 		       HorizontalAlignment="Left"
-		       Margin="5,5,5,5"
-		       Name="ImageDisplay" />
-		<TextBlock>
+		       Margin="5,5,5,5" Source="ImageIcons/TimeOverlayClock.png" />
+        <TextBlock>
 			<TextBlock Name="PreNameText"
 			           TextWrapping="Wrap" />
 			<LineBreak />
@@ -27,17 +26,17 @@
 			           TextWrapping="Wrap" />
 		</TextBlock>
 
-		<TextBlock Margin="5,5,5,5">
+        <TextBlock Margin="5,5,5,5">
 			<Hyperlink RequestNavigate="GithubLink_OnRequestNavigate"
 			           NavigateUri="http://github.com/riku12124/TimeOverlay">
 				<TextBlock Name="GithubLink"
 				           TextWrapping="Wrap" />
 			</Hyperlink>
 		</TextBlock>
-		<TextBlock Name="ApplicationDesc"
+        <TextBlock Name="ApplicationDesc"
 		           TextWrapping="Wrap"
 		           Text="Temp3"
 		           Margin="5,5,5,5" />
-	</WrapPanel>
+    </WrapPanel>
 
 </Window>

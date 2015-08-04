@@ -1,4 +1,8 @@
 ﻿namespace TimeOverlay {
+	 /// <summary>
+	 /// SettingsInfo is a holder for the Settings Window so the Main Window can be edited.
+	 /// This holds not only the saved values, but also the default settings.
+	 /// </summary>
 	public class SettingsInfo {
 		private const int TimeFontSizeDefault = 30;
 		private const int DateFontSizeDefault = 15;
@@ -40,7 +44,7 @@
 			WindowOpacityPercentage = WindowOpacityDefault;
 		}
 
-		public void DefaultClickThrough() {
+		 private void DefaultClickThrough() {
 			ClickThrough = ClickThroughDefault;
 		}
 

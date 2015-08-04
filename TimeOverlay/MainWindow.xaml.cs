@@ -51,6 +51,13 @@ namespace TimeOverlay {
 			_settingsWindowAccess.Hide();
 		}
 
+		  /// <summary>
+		  ///		 After every update interval, stop the timer, get the current date, and update the main form via dispatcher.
+		  ///		 Most visual updates will be placed within here so it is updated properly via the dispatcher to avoid 
+		  ///		 getting errors about not having the ability to edit another thread.
+		  /// </summary>
+		  /// <param name="sender"></param>
+		  /// <param name="elapsedEventArgs"></param>
 		private void UpdateTime_Elapsed(object sender, ElapsedEventArgs elapsedEventArgs) {
 			_updateTime.Stop();
 			_currentDateTime = DateTime.Now;
@@ -72,14 +79,27 @@ namespace TimeOverlay {
 			_updateTime.Start();
 		}
 
+		  /// <summary>
+		  /// On mouse down, move the whole window. (does not work if hit-click check is disabled)
+		  /// </summary>
+		  /// <param name="sender"></param>
+		  /// <param name="e"></param>
 		private void Window_MouseDown(object sender, MouseButtonEventArgs e) {
 			if (e.ChangedButton == MouseButton.Left) DragMove();
 		}
 
-		private void CloseOverlay_Click(object sender, RoutedEventArgs e) {
+		  /// <summary>
+		  /// In context-menu item
+		  /// On click, shut down the application.
+		  /// </summary>
+		  /// <param name="sender"></param>
+		  /// <param name="e"></param>
+		private void CloseOverlay_Click(object sender, RoutedEventArgs e)
+		  {
+			  _updateTime.Stop();
 			Application.Current.Shutdown();
 		}
-
+		  
 		private void LblDate_OnLoaded(object sender, RoutedEventArgs e) {
 			LblDate.Content = "Getting Date...";
 		}
@@ -88,27 +108,42 @@ namespace TimeOverlay {
 			LblTime.Content = "Getting Time...";
 		}
 
+		  /// <summary>
+		  /// In context-menu item
+		  /// On click, show the settings window.
+		  /// </summary>
+		  /// <param name="sender"></param>
+		  /// <param name="e"></param>
 		private void ShowSettings_Click(object sender, RoutedEventArgs e) {
 			_settingsWindowAccess.Show();
 		}
 
+		  /// <summary>
+		  /// In context-menu item
+		  /// On click, show the about window.
+		  /// </summary>
+		  /// <param name="sender"></param>
+		  /// <param name="e"></param>
 		private void ShowAbout_Click(object sender, RoutedEventArgs e) {
 			_aboutWindow.Show();
 		}
 
+		  /// <summary>
+		  /// Try to save the application on close.
+		  /// </summary>
+		  /// <param name="sender"></param>
+		  /// <param name="e"></param>
 		private void MainWindow_OnClosing(object sender, CancelEventArgs e) {
-			var saveSettings = _settingsWindowAccess.Settings;
+            try
+            {
+            var saveSettings = _settingsWindowAccess.Settings;
 			var writer = new XmlSerializer(typeof (SettingsInfo));
 			var file = File.Create(_path);
-
-			try {
 				writer.Serialize(file, saveSettings);
+                file.Close();
 			}
 			catch (Exception ex) {
 				MessageBox.Show("Error writing settings to document:" + ex.Message + "\n\n\n" + ex.StackTrace);
-			}
-			finally {
-				file.Close();
 			}
 
 			_settingsWindowAccess.Settings.CloseApplication = true;

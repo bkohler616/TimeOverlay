@@ -1,7 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Navigation;
 
 namespace TimeOverlay {
@@ -22,15 +24,31 @@ namespace TimeOverlay {
 			//ImageDisplay.Source = "pack://application:,,,,/Resources/TimeOverlayClock.png";
 		}
 
+		  /// <summary>
+		  /// On GitHub Link Click
+		  /// Start process to open browser to the TimeOverlay project on Github.
+		  /// </summary>
+		  /// <param name="sender"></param>
+		  /// <param name="e"></param>
 		private void GithubLink_OnRequestNavigate(object sender, RequestNavigateEventArgs e) {
 			Process.Start("http://github.com/riku12124/TimeOverlay");
 		}
 
+		  /// <summary>
+		  /// On Window Closing Hide window.
+		  /// </summary>
+		  /// <param name="sender"></param>
+		  /// <param name="e"></param>
 		private void About_OnClosing(object sender, CancelEventArgs e) {
 			e.Cancel = true;
 			Hide();
 		}
 
+		  /// <summary>
+		  /// On Developer Name Click Open link to his website.
+		  /// </summary>
+		  /// <param name="sender"></param>
+		  /// <param name="e"></param>
 		private void BenWebsite_OnRequestNavigate(object sender, RequestNavigateEventArgs e) {
 			Process.Start("http://BenKohler.com");
 		}

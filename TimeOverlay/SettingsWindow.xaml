@@ -120,7 +120,7 @@
 					  HorizontalAlignment="Center"
 					  VerticalAlignment="Center"
 					  IsChecked="True"
-					  Unchecked="CbClickThrough_OnUnchecked"
+					  Unchecked="CbWindowClickable_OnUnchecked"
 					  Checked="CbClickThrough_OnChecked"/>
 		 
 		 <Button Grid.Column="3"

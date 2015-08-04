@@ -15,31 +15,45 @@ namespace TimeOverlay {
 		public SettingsWindow() {
 			InitializeComponent();
 			_settings = new SettingsInfo();
-			NotifyIcon nIcon = new NotifyIcon {Icon = SystemIcons.Exclamation};
+			NotifyIcon nIcon = new NotifyIcon {Icon = new Icon("/TimeOverlay;Component/ImageIcons/TimeOverlayClock.ico")};
 			nIcon.MouseClick += NIconOnTrayLeftMouseDown;
 			nIcon.Visible = true;
 			SetSettingsWindowContent();
-			
-
 		}
 
+		  /// <summary>
+		  /// Notify icon on click.
+		  /// Show the settings window.
+		  /// (Mainly used when hit-check is disabled)
+		  /// </summary>
+		  /// <param name="sender"></param>
+		  /// <param name="routedEventArgs"></param>
 		private void NIconOnTrayLeftMouseDown(object sender, EventArgs routedEventArgs) {
 			this.Show();
 		}
 
+		  /// <summary>
+		  /// Constructor to retrieve the saved settings of the on-disk serialized XML.
+		  /// </summary>
+		  /// <param name="savedSettings"></param>
 		public SettingsWindow(SettingsInfo savedSettings) {
 			InitializeComponent();
 			_settings = savedSettings;
-			NotifyIcon nIcon = new NotifyIcon {Icon = SystemIcons.Exclamation};
+			NotifyIcon nIcon = new NotifyIcon {Icon = new Icon(System.Windows.Application.GetResourceStream(new Uri("ImageIcons/TimeOverlayClock.ico", UriKind.Relative)).Stream) };
 			nIcon.MouseClick += NIconOnTrayLeftMouseDown;
 			nIcon.Visible = true;
 			SetSettingsWindowContent();
 		}
 
-		public SettingsInfo Settings {
-			get { return _settings; }
-		}
 
+		  /// <summary>
+		  /// Accessor for the settings, so the main window can get the settings information.
+		  /// </summary>
+		  public SettingsInfo Settings => _settings;
+
+		  /// <summary>
+		  /// Set the content of the settings to the currently saved settings
+		  /// </summary>
 		private void SetSettingsWindowContent() {
 			TbDateColor.Text = _settings.DateTextColor;
 			TbTimeColor.Text = _settings.TimeTextColor;
@@ -49,6 +63,12 @@ namespace TimeOverlay {
 			CbClickThrough.IsChecked = _settings.ClickThrough;
 		}
 
+		  /// <summary>
+		  /// On close application close, legitamatly close.
+		  /// On close this window, set the settings to the save, set the content, then hide the window and cancel the close.
+		  /// </summary>
+		  /// <param name="sender"></param>
+		  /// <param name="e"></param>
 		private void SettingsWindow_OnClosing(object sender, CancelEventArgs e) {
 			if (_settings.CloseApplication) return;
 
@@ -60,6 +80,11 @@ namespace TimeOverlay {
 
 		}
 
+		  /// <summary>
+		  /// Check if the input settings from the settings window is proper.
+		  /// Build error list if there are any improper values.
+		  /// Output error list in the end and save the settings.
+		  /// </summary>
 		private void SetSettings() {
 			#region vars
 
@@ -174,11 +199,22 @@ namespace TimeOverlay {
 			#endregion
 		}
 
+		  /// <summary>
+		  /// Reset button on click
+		  /// Reset the settings to default and set the window content to show.
+		  /// </summary>
+		  /// <param name="sender"></param>
+		  /// <param name="e"></param>
 		private void ResetDefault_OnClick(object sender, RoutedEventArgs e) {
 			_settings.RestoreDefault();
 			SetSettingsWindowContent();
 		}
 
+		  /// <summary>
+		  /// Regex check if the hex string is properly formatted
+		  /// </summary>
+		  /// <param name="hexString"></param>
+		  /// <returns></returns>
 		private bool CheckHex(string hexString) {
 			var m = Regex.Match(hexString, @"([A-F0-9])+", RegexOptions.IgnoreCase);
 			var rgxTest = m.Value.Equals(hexString);
@@ -187,6 +223,11 @@ namespace TimeOverlay {
 			return rgxTest;
 		}
 
+		  /// <summary>
+		  /// Regex check if the int string is properly formatted
+		  /// </summary>
+		  /// <param name="intString"></param>
+		  /// <returns></returns>
 		private bool CheckInt(string intString) {
 			var m = Regex.Match(intString, @"([0-9])+");
 			var rgxTest = m.Value.Equals(intString);
@@ -195,14 +236,34 @@ namespace TimeOverlay {
 			return rgxTest;
 		}
 
-		private void CbClickThrough_OnUnchecked(object sender, RoutedEventArgs e) {
+		  /// <summary>
+		  /// Window Clickable Check Box on Uncheck.
+		  /// Set the Textbox opacity text to 0.
+		  /// (Used in settings and main window the make the window clickable)
+		  /// </summary>
+		  /// <param name="sender"></param>
+		  /// <param name="e"></param>
+		private void CbWindowClickable_OnUnchecked(object sender, RoutedEventArgs e) {
 			TbBackgroundOpacity.Text = "0";
 		}
 
+		  /// <summary>
+		  /// Window Clickable Check Box on Check
+		  /// Set the Textbox opacity text to 50.
+		  /// (Used in settings and main window to make the window clickable)
+		  /// </summary>
+		  /// <param name="sender"></param>
+		  /// <param name="e"></param>
 		private void CbClickThrough_OnChecked(object sender, RoutedEventArgs e) {
 			TbBackgroundOpacity.Text = "50";
 		}
 
+		  /// <summary>
+		  /// Apply button On Click
+		  /// Save settings to Settings Info.
+		  /// </summary>
+		  /// <param name="sender"></param>
+		  /// <param name="e"></param>
 		private void Apply_OnClick(object sender, RoutedEventArgs e) {
 			SetSettings();
 		}
