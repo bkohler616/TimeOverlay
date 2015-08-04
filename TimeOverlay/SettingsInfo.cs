@@ -1,9 +1,11 @@
-﻿namespace TimeOverlay {
-	 /// <summary>
-	 /// SettingsInfo is a holder for the Settings Window so the Main Window can be edited.
-	 /// This holds not only the saved values, but also the default settings.
-	 /// </summary>
-	public class SettingsInfo {
+﻿namespace TimeOverlay
+{
+	/// <summary>
+	///     SettingsInfo is a holder for the Settings Window so the Main Window can be edited.
+	///     This holds not only the saved values, but also the default settings.
+	/// </summary>
+	public class SettingsInfo
+	{
 		private const int TimeFontSizeDefault = 30;
 		private const int DateFontSizeDefault = 15;
 		private const string TimeTextColorDefault = "ffffff";
@@ -11,7 +13,8 @@
 		private const int WindowOpacityDefault = 50;
 		private const bool ClickThroughDefault = true;
 
-		public SettingsInfo() {
+		public SettingsInfo()
+		{
 			RestoreDefault();
 			CloseApplication = false;
 		}
@@ -24,31 +27,38 @@
 		public int WindowOpacityPercentage { get; set; }
 		public bool ClickThrough { get; set; }
 
-		public void DefaultTimeColor() {
+		public void DefaultTimeColor()
+		{
 			TimeTextColor = TimeTextColorDefault;
 		}
 
-		public void DefaultDateColor() {
+		public void DefaultDateColor()
+		{
 			DateTextColor = DateTextColorDefault;
 		}
 
-		public void DefaultTimeFontSize() {
+		public void DefaultTimeFontSize()
+		{
 			TimeFontSize = TimeFontSizeDefault;
 		}
 
-		public void DefaultDateFontSize() {
+		public void DefaultDateFontSize()
+		{
 			DateFontSize = DateFontSizeDefault;
 		}
 
-		public void DefaultOpacityPercentage() {
+		public void DefaultOpacityPercentage()
+		{
 			WindowOpacityPercentage = WindowOpacityDefault;
 		}
 
-		 private void DefaultClickThrough() {
+		private void DefaultClickThrough()
+		{
 			ClickThrough = ClickThroughDefault;
 		}
 
-		public void RestoreDefault() {
+		public void RestoreDefault()
+		{
 			DefaultDateColor();
 			DefaultTimeColor();
 			DefaultDateFontSize();
