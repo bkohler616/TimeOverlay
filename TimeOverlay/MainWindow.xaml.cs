@@ -8,8 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Xml.Serialization;
 
-namespace TimeOverlay
-{
+namespace TimeOverlay {
 	//TODO: Write xml comments to all classes and methods.
 	/// <summary>
 	///     This application was made by Benjamin Kohler.
@@ -22,19 +21,16 @@ namespace TimeOverlay
 	///     2. The work I'm attending requires an application that will overlay over the main screen. This will be not only an
 	///     experiment, but also the base foundation for that program.
 	/// </summary>
-	public partial class MainWindow
-	{
+	public partial class MainWindow {
 		private static string _path;
 		private readonly About _aboutWindow;
 		private readonly SettingsWindow _settingsWindowAccess;
 		private readonly Timer _updateTime;
 		private DateTime _currentDateTime;
 
-		public MainWindow()
-		{
+		public MainWindow() {
 			InitializeComponent();
-			_updateTime = new Timer
-			{
+			_updateTime = new Timer {
 				Interval = 1000
 			};
 			_currentDateTime = new DateTime();
@@ -45,8 +41,7 @@ namespace TimeOverlay
 			_path = (new FileInfo(Assembly.GetEntryAssembly().Location)).Directory + "//TimeOverlaySettings.xml";
 
 			//If settings save exists, deserialize it to SettingsWindow
-			if (File.Exists(_path))
-			{
+			if (File.Exists(_path)) {
 				var reader = new XmlSerializer(typeof (SettingsInfo));
 				var file = new StreamReader(_path);
 				_settingsWindowAccess = new SettingsWindow((SettingsInfo) reader.Deserialize(file));
@@ -63,13 +58,11 @@ namespace TimeOverlay
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="elapsedEventArgs"></param>
-		private void UpdateTime_Elapsed(object sender, ElapsedEventArgs elapsedEventArgs)
-		{
+		private void UpdateTime_Elapsed(object sender, ElapsedEventArgs elapsedEventArgs) {
 			_updateTime.Stop();
 			_currentDateTime = DateTime.Now;
 			//Invoke another thread to input content
-			Application.Current.Dispatcher.BeginInvoke((Action) delegate
-			{
+			Application.Current.Dispatcher.BeginInvoke((Action) delegate {
 				LblDate.Foreground =
 					(SolidColorBrush) new BrushConverter().ConvertFrom("#" + _settingsWindowAccess.Settings.DateTextColor);
 				LblTime.Foreground =
@@ -91,8 +84,7 @@ namespace TimeOverlay
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-		{
+		private void Window_MouseDown(object sender, MouseButtonEventArgs e) {
 			if (e.ChangedButton == MouseButton.Left) DragMove();
 		}
 
@@ -102,19 +94,16 @@ namespace TimeOverlay
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void CloseOverlay_Click(object sender, RoutedEventArgs e)
-		{
+		private void CloseOverlay_Click(object sender, RoutedEventArgs e) {
 			_updateTime.Stop();
 			Application.Current.Shutdown();
 		}
 
-		private void LblDate_OnLoaded(object sender, RoutedEventArgs e)
-		{
+		private void LblDate_OnLoaded(object sender, RoutedEventArgs e) {
 			LblDate.Content = "Getting Date...";
 		}
 
-		private void LblTime_OnLoaded(object sender, RoutedEventArgs e)
-		{
+		private void LblTime_OnLoaded(object sender, RoutedEventArgs e) {
 			LblTime.Content = "Getting Time...";
 		}
 
@@ -124,8 +113,7 @@ namespace TimeOverlay
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void ShowSettings_Click(object sender, RoutedEventArgs e)
-		{
+		private void ShowSettings_Click(object sender, RoutedEventArgs e) {
 			_settingsWindowAccess.Show();
 		}
 
@@ -135,8 +123,7 @@ namespace TimeOverlay
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void ShowAbout_Click(object sender, RoutedEventArgs e)
-		{
+		private void ShowAbout_Click(object sender, RoutedEventArgs e) {
 			_aboutWindow.Show();
 		}
 
@@ -145,18 +132,15 @@ namespace TimeOverlay
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void MainWindow_OnClosing(object sender, CancelEventArgs e)
-		{
-			try
-			{
+		private void MainWindow_OnClosing(object sender, CancelEventArgs e) {
+			try {
 				var saveSettings = _settingsWindowAccess.Settings;
 				var writer = new XmlSerializer(typeof (SettingsInfo));
 				var file = File.Create(_path);
 				writer.Serialize(file, saveSettings);
 				file.Close();
 			}
-			catch (Exception ex)
-			{
+			catch (Exception ex) {
 				MessageBox.Show("Error writing settings to document:" + ex.Message + "\n\n\n" + ex.StackTrace);
 			}
 

@@ -7,15 +7,12 @@ using System.Windows.Forms;
 using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
 
-namespace TimeOverlay
-{
+namespace TimeOverlay {
 	/// <summary>
 	///     Interaction logic for SettingsWindow.xaml
 	/// </summary>
-	public partial class SettingsWindow
-	{
-		public SettingsWindow()
-		{
+	public partial class SettingsWindow {
+		public SettingsWindow() {
 			InitializeComponent();
 			Settings = new SettingsInfo();
 			var nIcon = new NotifyIcon {Icon = new Icon("/TimeOverlay;Component/ImageIcons/TimeOverlayClock.ico")};
@@ -28,12 +25,10 @@ namespace TimeOverlay
 		///     Constructor to retrieve the saved settings of the on-disk serialized XML.
 		/// </summary>
 		/// <param name="savedSettings"></param>
-		public SettingsWindow(SettingsInfo savedSettings)
-		{
+		public SettingsWindow(SettingsInfo savedSettings) {
 			InitializeComponent();
 			Settings = savedSettings;
-			var nIcon = new NotifyIcon
-			{
+			var nIcon = new NotifyIcon {
 				Icon = new Icon(Application.GetResourceStream(new Uri("ImageIcons/TimeOverlayClock.ico", UriKind.Relative)).Stream)
 			};
 			nIcon.MouseClick += NIconOnTrayLeftMouseDown;
@@ -53,16 +48,14 @@ namespace TimeOverlay
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="routedEventArgs"></param>
-		private void NIconOnTrayLeftMouseDown(object sender, EventArgs routedEventArgs)
-		{
+		private void NIconOnTrayLeftMouseDown(object sender, EventArgs routedEventArgs) {
 			Show();
 		}
 
 		/// <summary>
 		///     Set the content of the settings to the currently saved settings
 		/// </summary>
-		private void SetSettingsWindowContent()
-		{
+		private void SetSettingsWindowContent() {
 			TbDateColor.Text = Settings.DateTextColor;
 			TbTimeColor.Text = Settings.TimeTextColor;
 			TbDateFontSize.Text = Settings.DateFontSize.ToString();
@@ -77,8 +70,7 @@ namespace TimeOverlay
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void SettingsWindow_OnClosing(object sender, CancelEventArgs e)
-		{
+		private void SettingsWindow_OnClosing(object sender, CancelEventArgs e) {
 			if (Settings.CloseApplication) return;
 
 			SetSettings();
@@ -93,8 +85,7 @@ namespace TimeOverlay
 		///     Build error list if there are any improper values.
 		///     Output error list in the end and save the settings.
 		/// </summary>
-		private void SetSettings()
-		{
+		private void SetSettings() {
 			#region vars
 
 			var errorList = "Error(s):";
@@ -106,31 +97,27 @@ namespace TimeOverlay
 
 			#region hexColors
 
-			try
-			{
+			try {
 				if (TbDateColor.Text.Length < 6)
 					throw new Exception("\n-Date hex code is not proper length. (please use RGB without # symbol)");
 				if (!CheckHex(TbDateColor.Text))
 					throw new Exception("\n-Date hex code is not in proper format. Please use only hex characters");
 				Settings.DateTextColor = TbDateColor.Text;
 			}
-			catch (Exception ex)
-			{
+			catch (Exception ex) {
 				errorList += ex.Message;
 				printErrorIfTrue = true;
 				Settings.DefaultDateColor();
 			}
 
-			try
-			{
+			try {
 				if (TbTimeColor.Text.Length < 6)
 					throw new Exception("\n-Time hex code is not proper length. (please use RGB without # symbol)");
 				if (!CheckHex(TbTimeColor.Text))
 					throw new Exception("\n-Time hex code is not in proper format. Please use only hex characters");
 				Settings.TimeTextColor = TbTimeColor.Text;
 			}
-			catch (Exception ex)
-			{
+			catch (Exception ex) {
 				errorList += ex.Message;
 				printErrorIfTrue = true;
 				Settings.DefaultTimeColor();
@@ -141,8 +128,7 @@ namespace TimeOverlay
 			#region fontIntegers
 
 			//Date Font Check
-			try
-			{
+			try {
 				if (!CheckInt(TbDateFontSize.Text))
 					throw new Exception("\n-Date font size is not a proper value. Please only use whole numbers.");
 				int fontValue;
@@ -153,16 +139,14 @@ namespace TimeOverlay
 					throw new Exception("\n-Date font size is out of range. Please use numbers in between 5 and 200");
 				Settings.DateFontSize = fontValue;
 			}
-			catch (Exception ex)
-			{
+			catch (Exception ex) {
 				errorList += ex.Message;
 				printErrorIfTrue = true;
 				Settings.DefaultDateFontSize();
 			}
 
 			//Time Font Check
-			try
-			{
+			try {
 				if (!CheckInt(TbTimeFontSize.Text))
 					throw new Exception("\n-Time font size is not a proper value. Please only use whole numbers.");
 				int fontValue;
@@ -173,8 +157,7 @@ namespace TimeOverlay
 					throw new Exception("\n-Time font size is out of range. Please use numbers in between 5 and 400");
 				Settings.TimeFontSize = fontValue;
 			}
-			catch (Exception ex)
-			{
+			catch (Exception ex) {
 				errorList += ex.Message;
 				printErrorIfTrue = true;
 				Settings.DefaultTimeFontSize();
@@ -183,8 +166,7 @@ namespace TimeOverlay
 			#endregion
 
 			//Opacity Check
-			try
-			{
+			try {
 				if (!CheckInt(TbBackgroundOpacity.Text))
 					throw new Exception("\n-Opacity is not a proper value. Please only use whole numbers.");
 				int opacityPercent;
@@ -195,8 +177,7 @@ namespace TimeOverlay
 					throw new Exception("\n-Opacity percentage is out of range. Please use numbers in between 1 and 100");
 				Settings.WindowOpacityPercentage = opacityPercent;
 			}
-			catch (Exception ex)
-			{
+			catch (Exception ex) {
 				errorList += ex.Message;
 				printErrorIfTrue = true;
 				Settings.DefaultOpacityPercentage();
@@ -220,8 +201,7 @@ namespace TimeOverlay
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void ResetDefault_OnClick(object sender, RoutedEventArgs e)
-		{
+		private void ResetDefault_OnClick(object sender, RoutedEventArgs e) {
 			Settings.RestoreDefault();
 			SetSettingsWindowContent();
 		}
@@ -231,8 +211,7 @@ namespace TimeOverlay
 		/// </summary>
 		/// <param name="hexString"></param>
 		/// <returns></returns>
-		private bool CheckHex(string hexString)
-		{
+		private bool CheckHex(string hexString) {
 			var m = Regex.Match(hexString, @"([A-F0-9])+", RegexOptions.IgnoreCase);
 			var rgxTest = m.Value.Equals(hexString);
 			if (rgxTest)
@@ -245,8 +224,7 @@ namespace TimeOverlay
 		/// </summary>
 		/// <param name="intString"></param>
 		/// <returns></returns>
-		private bool CheckInt(string intString)
-		{
+		private bool CheckInt(string intString) {
 			var m = Regex.Match(intString, @"([0-9])+");
 			var rgxTest = m.Value.Equals(intString);
 			if (rgxTest)
@@ -261,8 +239,7 @@ namespace TimeOverlay
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void CbWindowClickable_OnUnchecked(object sender, RoutedEventArgs e)
-		{
+		private void CbWindowClickable_OnUnchecked(object sender, RoutedEventArgs e) {
 			TbBackgroundOpacity.Text = "0";
 		}
 
@@ -273,8 +250,7 @@ namespace TimeOverlay
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void CbClickThrough_OnChecked(object sender, RoutedEventArgs e)
-		{
+		private void CbClickThrough_OnChecked(object sender, RoutedEventArgs e) {
 			TbBackgroundOpacity.Text = "50";
 		}
 
@@ -284,8 +260,7 @@ namespace TimeOverlay
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void Apply_OnClick(object sender, RoutedEventArgs e)
-		{
+		private void Apply_OnClick(object sender, RoutedEventArgs e) {
 			SetSettings();
 		}
 	}

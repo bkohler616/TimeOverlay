@@ -4,15 +4,12 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Navigation;
 
-namespace TimeOverlay
-{
+namespace TimeOverlay {
 	/// <summary>
 	///     Interaction logic for About.xaml
 	/// </summary>
-	public partial class About : Window
-	{
-		public About()
-		{
+	public partial class About : Window {
+		public About() {
 			InitializeComponent();
 			Hide();
 			PreNameText.Text = "Application Developer: ";
@@ -31,8 +28,7 @@ namespace TimeOverlay
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void GithubLink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
-		{
+		private void GithubLink_OnRequestNavigate(object sender, RequestNavigateEventArgs e) {
 			Process.Start("http://github.com/riku12124/TimeOverlay");
 		}
 
@@ -41,8 +37,7 @@ namespace TimeOverlay
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void About_OnClosing(object sender, CancelEventArgs e)
-		{
+		private void About_OnClosing(object sender, CancelEventArgs e) {
 			e.Cancel = true;
 			Hide();
 		}
@@ -52,8 +47,7 @@ namespace TimeOverlay
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void BenWebsite_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
-		{
+		private void BenWebsite_OnRequestNavigate(object sender, RequestNavigateEventArgs e) {
 			Process.Start("http://BenKohler.com");
 		}
 	}
